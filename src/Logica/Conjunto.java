@@ -10,25 +10,25 @@ import java.util.Set;
 //conjunto potencia entre los conjuntos.
 public class Conjunto {
 
-    private static <T> Set<T> union(Set<T> conjuntoA, Set<T> conjuntoB) {
+    public static <T> Set<T> union(Set<T> conjuntoA, Set<T> conjuntoB) {
         Set<T> unionSet = new HashSet<>(conjuntoA);
         unionSet.addAll(conjuntoB);
         return unionSet;
     }
 
-    private static <T> Set<T> interseccion(Set<T> conjuntoA, Set<T> conjuntoB) {
+    public static <T> Set<T> interseccion(Set<T> conjuntoA, Set<T> conjuntoB) {
         Set<T> interseccion = new HashSet<>(conjuntoA); // Copia conjuntoA
         interseccion.retainAll(conjuntoB); //Mantiene los elementos que tenga el conjuntoB
         return interseccion;
     }
 
-    private static <T> Set<T> diferencia(Set<T> conjuntoA, Set<T> conjuntoB) {
+    public static <T> Set<T> diferencia(Set<T> conjuntoA, Set<T> conjuntoB) {
         Set<T> diferencia = new HashSet<>(conjuntoA); // Copia conjuntoA
         diferencia.removeAll(conjuntoB); //Elimina los elementos que tenga conjuntoB
         return diferencia;
     }
 
-    private static <T> Set<T> productoCruz(Set<T> conjuntoA, Set<T> conjuntoB) {
+    public static <T> Set<T> productoCruz(Set<T> conjuntoA, Set<T> conjuntoB) {
         Set<T> productoCruz = new HashSet<>();
         for (T elementoA : conjuntoA) {
             for (T elementoB : conjuntoB) {
@@ -38,7 +38,7 @@ public class Conjunto {
         return productoCruz;
     }
 
-    private static <T> Set<Set<T>> conjuntoPotencia(Set<T> conjuntoOriginal) {
+    public static <T> Set<Set<T>> conjuntoPotencia(Set<T> conjuntoOriginal) {
         Set<Set<T>> conjuntoPotencia = new HashSet<Set<T>>();
 
         //P({}) = {{}}

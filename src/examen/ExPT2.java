@@ -7,6 +7,7 @@ public class ExPT2 extends javax.swing.JFrame {
 
     public ExPT2() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -142,14 +143,14 @@ public class ExPT2 extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         this.dispose();
-        Menú_General menu = new Menú_General();
+        Menu menu = new Menu();
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        Menú_General menu = new Menú_General();
+        Menu menu = new Menu();
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
@@ -163,7 +164,7 @@ public class ExPT2 extends javax.swing.JFrame {
 
     private void Volver1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Volver1ActionPerformed
         // TODO add your handling code here:
-        Menú_General menu = new Menú_General();
+        Menu menu = new Menu();
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_Volver1ActionPerformed

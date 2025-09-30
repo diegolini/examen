@@ -1,5 +1,6 @@
 package Logica;
 
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,7 +8,7 @@ import java.util.Set;
 //dado un alfabeto y un lenguaje (conjunto de cadenas), indique cuales de esas cadenas pertenecen al alfabeto y cuáles no.
 public class Checador {
 
-    private static Set<Character> crearAlfabeto(String textoAlfabeto) {
+    public static Set<Character> crearAlfabeto(String textoAlfabeto) {
         Set<Character> alfabeto = new HashSet<>();
 
         if (textoAlfabeto == null || textoAlfabeto.isEmpty()) {
@@ -26,7 +27,7 @@ public class Checador {
         return alfabeto;
     }
 
-    private static boolean perteneceAlfabeto(String cadena, Set<Character> alfabeto) {
+    public static boolean perteneceAlfabeto(String cadena, Set<Character> alfabeto) {
         // La cadena vacía siempre pertenece a cualquier alfabeto.
         if (cadena.isEmpty()) {
             return true;

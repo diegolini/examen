@@ -8,7 +8,7 @@ import java.util.List;
 //dado un lenguaje (conjunto de cadenas) muestre el alfabeto al que pertenecen las cadenas.
 public class determinarAlfabeto {
 
-    private static Set<Character> obtenerAlfabeto(List<String> lenguaje) {
+    public static Set<Character> obtenerAlfabeto(List<String> lenguaje) {
         Set<Character> alfabeto = new HashSet<>();
 
         // 1. Iterar sobre cada cadena (palabra) del lenguaje

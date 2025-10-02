@@ -8,6 +8,7 @@ import java.util.List;
 public class Cadena {
 
     public static String analizarCadena(String cadena) {
+        cadena = cadena.replace("{", "").replace("}", "").trim();
 
         // 1. Longitud de la Cadena
         int longitud = cadena.length();

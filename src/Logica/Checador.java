@@ -18,7 +18,7 @@ public class Checador {
         // Iterar sobre cada carácter de la cadena ingresada
         for (char simbolo : textoAlfabeto.toCharArray()) {
             //ignoramos delimitadores y espacios:
-            if (simbolo != ' ' && simbolo != ',') {
+            if (simbolo != ' ' && simbolo != ',' && simbolo != '{' && simbolo != '}') {
                 alfabeto.add(simbolo);
             }
 

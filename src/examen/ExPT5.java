@@ -6,6 +6,7 @@ package examen;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.swing.JOptionPane;
 
@@ -24,20 +25,47 @@ public class ExPT5 extends javax.swing.JFrame {
     }
 
     private Set<String> convertirTextoAConjunto(String texto) {
-    Set<String> conjunto = new HashSet<>();
+    Set<String> conjunto = new LinkedHashSet<>(); // LinkedHashSet mantiene el orden de entrada
+    
     if (texto != null && !texto.trim().isEmpty()) {
+        // Quitar las llaves al inicio y al final
+        texto = texto.trim();
+        if (texto.startsWith("{") && texto.endsWith("}")) {
+            texto = texto.substring(1, texto.length() - 1); // elimina { y }
+        } else {
+            JOptionPane.showMessageDialog(this, 
+                "Formato inválido. Usa llaves, por ejemplo: {a,b,ab}");
+            return conjunto; // regresa vacío si no está en formato correcto
+        }
+        
+        // Separar por comas
         String[] elementos = texto.split(",");
         for (String elem : elementos) {
-            conjunto.add(elem.trim());
+            elem = elem.trim();
+            if (elem.equals("ε")) {
+                conjunto.add(""); // representa epsilon como cadena vacía
+            } else if (!elem.isEmpty()) {
+                conjunto.add(elem);
+            }
         }
     }
+    
     return conjunto;
 }
 
 // Convierte Set<String> a String bonito
 private String conjuntoAString(Set<String> conjunto) {
     if (conjunto.isEmpty()) return "{ }";
-    return conjunto.toString();
+    
+    StringBuilder sb = new StringBuilder("{");
+    boolean first = true;
+    for (String s : conjunto) {
+        if (!first) sb.append(",");
+        sb.append(s.isEmpty() ? "ε" : s); // mostrar ε si está vacío
+        first = false;
+    }
+    sb.append("}");
+    return sb.toString();
 }
 
 // Operaciones
@@ -184,7 +212,7 @@ private Set<String> calcularInverso(Set<String> L) {
 
         jLabel3.setText("Ingrese una potencia:");
 
-        jButton1.setText("Volver al menú");
+        jButton1.setText("<---");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -198,65 +226,58 @@ private Set<String> calcularInverso(Set<String> L) {
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addContainerGap(619, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtLenguaje1, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtLenguaje2, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPotencia, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnUnion)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(BtnInterseccion)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btndiferencia)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnConcatenacion)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnPotencia)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnInverso)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(25, 25, 25))))
+                    .addComponent(jButton1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(btnUnion)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(BtnInterseccion)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btndiferencia)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnConcatenacion)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnPotencia)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnInverso)))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtLenguaje2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                        .addComponent(txtLenguaje1, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(txtPotencia, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtLenguaje1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtLenguaje2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPotencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnUnion)
-                            .addComponent(BtnInterseccion)
-                            .addComponent(btndiferencia)
-                            .addComponent(btnConcatenacion)
-                            .addComponent(btnPotencia)
-                            .addComponent(btnInverso))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtLenguaje1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtLenguaje2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPotencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUnion)
+                    .addComponent(BtnInterseccion)
+                    .addComponent(btndiferencia)
+                    .addComponent(btnConcatenacion)
+                    .addComponent(btnPotencia)
+                    .addComponent(btnInverso))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();

@@ -199,7 +199,7 @@ public class ExPT6 extends javax.swing.JFrame {
 
     // ---------- Cerradura de Kleene ----------
     // (limitamos hasta longitud 3 para que no sea infinito)
-    ArrayList<String> kleene = generarCadenas(alfabeto, 3, true);
+    ArrayList<String> kleene = generarCadenas(alfabeto, 5, true);
     for (String s : kleene) {
         txtKleene.append(s + "\n");
     }

@@ -131,8 +131,8 @@ public class Menú_General extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        ExPT6 ventana6 = new ExPT6();
-    ventana6.setVisible(true);
+        ExPT5 ventana5 = new ExPT5();
+    ventana5.setVisible(true);
     this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -147,7 +147,7 @@ public class Menú_General extends javax.swing.JFrame {
         // TODO add your handling code here:
         ExPT2 ventana2 = new ExPT2();
     ventana2.setVisible(true);
-    this.dispose();
+    ventana2.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

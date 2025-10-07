@@ -24,98 +24,107 @@ public class ExPT5 extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-    private Set<String> convertirTextoAConjunto(String texto) {
-    Set<String> conjunto = new LinkedHashSet<>(); // LinkedHashSet mantiene el orden de entrada
+   // Convierte un texto con llaves y comas en un conjunto (Set) de cadenas
+private Set<String> convertirTextoAConjunto(String texto) {
+    Set<String> conjunto = new LinkedHashSet<>(); // LinkedHashSet mantiene el orden de inserción
     
     if (texto != null && !texto.trim().isEmpty()) {
-        // Quitar las llaves al inicio y al final
+        // Quitar espacios y validar que tenga formato { ... }
         texto = texto.trim();
         if (texto.startsWith("{") && texto.endsWith("}")) {
-            texto = texto.substring(1, texto.length() - 1); // elimina { y }
+            // Elimina la primera y última llave
+            texto = texto.substring(1, texto.length() - 1); 
         } else {
+            // Si no está en formato correcto, muestra advertencia y retorna vacío
             JOptionPane.showMessageDialog(this, 
                 "Formato inválido. Usa llaves, por ejemplo: {a,b,ab}");
-            return conjunto; // regresa vacío si no está en formato correcto
+            return conjunto;
         }
         
-        // Separar por comas
+        // Separar el contenido por comas
         String[] elementos = texto.split(",");
         for (String elem : elementos) {
             elem = elem.trim();
             if (elem.equals("ε")) {
-                conjunto.add(""); // representa epsilon como cadena vacía
+                conjunto.add(""); // ε se representa como cadena vacía
             } else if (!elem.isEmpty()) {
-                conjunto.add(elem);
+                conjunto.add(elem); // agrega cada elemento al conjunto
             }
         }
     }
     
-    return conjunto;
+    return conjunto; // devuelve el conjunto resultante
 }
-
 // Convierte Set<String> a String bonito
+
 private String conjuntoAString(Set<String> conjunto) {
-    if (conjunto.isEmpty()) return "{ }";
+    if (conjunto.isEmpty()) return "{ }"; // si está vacío
     
     StringBuilder sb = new StringBuilder("{");
     boolean first = true;
     for (String s : conjunto) {
         if (!first) sb.append(",");
-        sb.append(s.isEmpty() ? "ε" : s); // mostrar ε si está vacío
+        sb.append(s.isEmpty() ? "ε" : s); // muestra ε en lugar de ""
         first = false;
     }
     sb.append("}");
     return sb.toString();
 }
 
-// Operaciones
+// Unión de dos conjuntos 
 private Set<String> calcularUnion(Set<String> L1, Set<String> L2) {
     Set<String> res = new HashSet<>(L1);
     res.addAll(L2);
     return res;
 }
 
+// Intersección de dos conjuntos 
 private Set<String> calcularInterseccion(Set<String> L1, Set<String> L2) {
     Set<String> res = new HashSet<>(L1);
     res.retainAll(L2);
     return res;
 }
 
+// Diferencia de conjuntos 
 private Set<String> calcularDiferencia(Set<String> L1, Set<String> L2) {
     Set<String> res = new HashSet<>(L1);
     res.removeAll(L2);
     return res;
 }
 
+// Concatenación de dos conjuntos 
 private Set<String> calcularConcatenacion(Set<String> L1, Set<String> L2) {
     Set<String> res = new HashSet<>();
     for (String s1 : L1) {
         for (String s2 : L2) {
-            res.add(s1 + s2);
+            res.add(s1 + s2); // combina cada palabra de L1 con cada palabra de L2
         }
     }
     return res;
 }
 
+// Potencia de un conjunto 
 private Set<String> calcularPotencia(Set<String> L, int n) {
-    if (n == 0) return new HashSet<>(Collections.singleton("ε"));
-    Set<String> resultado = new HashSet<>(L);
+    if (n == 0) return new HashSet<>(Collections.singleton("ε")); // por definición, L^0 = {ε}
+    
+    Set<String> resultado = new HashSet<>(L); // empieza con L
     for (int i = 1; i < n; i++) {
         Set<String> temp = new HashSet<>();
         for (String s1 : resultado) {
             for (String s2 : L) {
-                temp.add(s1 + s2);
+                temp.add(s1 + s2); // multiplica (concatena) iterativamente
             }
         }
-        resultado = temp;
+        resultado = temp; // actualiza el conjunto
     }
     return resultado;
 }
 
+// Inverso de un conjunto (cada palabra se revierte)
 private Set<String> calcularInverso(Set<String> L) {
     Set<String> res = new HashSet<>();
     for (String s : L) {
-        res.add(new StringBuilder(s).reverse().toString());
+        res.add(new StringBuilder(s).reverse().toString()); // revierte cada string
     }
     return res;
 }

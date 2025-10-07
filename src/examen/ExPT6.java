@@ -252,37 +252,48 @@ if (alfabeto.length == 0 || (alfabeto.length == 1 && alfabeto[0].isEmpty())) {
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
-    private ArrayList<String> generarCadenas(String[] alfabeto, int maxLong, boolean kleene) {
-        ArrayList<String> resultado = new ArrayList<>();
+   // Genera todas las cadenas posibles de un alfabeto hasta una longitud máxima.
+// Puede incluir la cadena vacía si se activa la cerradura de Kleene.
+private ArrayList<String> generarCadenas(String[] alfabeto, int maxLong, boolean kleene) {
+    // Lista donde se van a guardar todas las cadenas generadas
+    ArrayList<String> resultado = new ArrayList<>();
 
-        if (kleene) {
-            resultado.add("ε"); // cadena vacía
-        }
-
-        for (int i = 1; i <= maxLong; i++) {
-            resultado.addAll(generarCadenasLongitudN(alfabeto, i));
-        }
-
-        return resultado;
+    // Si es cerradura de Kleene, agregamos la cadena vacía (ε)
+    if (kleene) {
+        resultado.add("ε"); // λ o epsilon: representa la cadena vacía
     }
 
-// Genera todas las cadenas de longitud exacta N
-    private ArrayList<String> generarCadenasLongitudN(String[] alfabeto, int n) {
-        ArrayList<String> resultado = new ArrayList<>();
-        generarRecursivo(alfabeto, "", n, resultado);
-        return resultado;
+    // Generar cadenas de longitud 1 hasta maxLong
+    for (int i = 1; i <= maxLong; i++) {
+        // Agrega todas las cadenas de longitud i
+        resultado.addAll(generarCadenasLongitudN(alfabeto, i));
     }
 
-// Función recursiva para construir cadenas
-    private void generarRecursivo(String[] alfabeto, String prefijo, int n, ArrayList<String> resultado) {
-        if (n == 0) {
-            resultado.add(prefijo);
-            return;
-        }
-        for (String letra : alfabeto) {
-            generarRecursivo(alfabeto, prefijo + letra, n - 1, resultado);
-        }
+    // Regresa todas las cadenas generadas
+    return resultado;
+}
+
+// Genera todas las cadenas de una longitud exacta N usando el alfabeto
+private ArrayList<String> generarCadenasLongitudN(String[] alfabeto, int n) {
+    ArrayList<String> resultado = new ArrayList<>();
+    // Se llama a la función recursiva para construir las cadenas
+    generarRecursivo(alfabeto, "", n, resultado);
+    return resultado;
+}
+
+// Función recursiva que construye las cadenas combinando símbolos del alfabeto
+private void generarRecursivo(String[] alfabeto, String prefijo, int n, ArrayList<String> resultado) {
+    // Caso base: si ya no falta longitud (n == 0), se guarda la cadena construida
+    if (n == 0) {
+        resultado.add(prefijo);
+        return;
     }
+    // Caso recursivo: probar cada letra del alfabeto
+    for (String letra : alfabeto) {
+        // Se llama recursivamente reduciendo la longitud pendiente (n - 1)
+        generarRecursivo(alfabeto, prefijo + letra, n - 1, resultado);
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGenerar;

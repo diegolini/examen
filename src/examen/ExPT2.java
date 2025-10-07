@@ -165,23 +165,39 @@ public class ExPT2 extends javax.swing.JFrame {
     }//GEN-LAST:event_Volver1ActionPerformed
 
     private void comprobarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comprobarBtnActionPerformed
-        // TODO add your handling code here:
-        String textoAlfabeto = alfabeto.getText();
-        String cadenaAChecar = lenguaje.getText();
-        
-        Set<Character> alfabetoSet = Checador.crearAlfabeto(textoAlfabeto);
-        boolean pertenece = Checador.perteneceAlfabeto(cadenaAChecar, alfabetoSet);
-        
-        String mensaje = "Alfabeto definido: " + alfabetoSet.toString() + "\n";
-        mensaje += "Conjunto de cadenas a comprobar: \"" + cadenaAChecar + "\"\n";
+       
+// 1. Obtener los textos de los campos
+String textoAlfabeto = alfabeto.getText();
+String textoLenguaje = lenguaje.getText();
 
-        if (pertenece) {
-            mensaje += "Resultado: PERTENECE al alfabeto (Σ*) ✅";
-        } else {
-            mensaje += "Resultado: NO PERTENECE al alfabeto (Σ*) ❌";
-        }
-        resultadoArea.setText(mensaje);
+// 2. Crear el conjunto del alfabeto usando tu clase Checador
+Set<Character> alfabetoSet = Checador.crearAlfabeto(textoAlfabeto);
 
+// 3. Limpiar la entrada del lenguaje (quitar llaves y espacios)
+textoLenguaje = textoLenguaje.replace("{", "").replace("}", "").trim();
+
+// 4. Separar las cadenas por comas
+String[] cadenas = textoLenguaje.split(",");
+
+// 5. Construir el mensaje de salida
+StringBuilder mensaje = new StringBuilder();
+mensaje.append("Alfabeto definido: ").append(alfabetoSet).append("\n");
+mensaje.append("Cadenas a comprobar:\n");
+
+// 6. Verificar cada cadena una por una
+for (String c : cadenas) {
+    String cadenaLimpia = c.trim(); // Quitar espacios individuales
+    boolean pertenece = Checador.perteneceAlfabeto(cadenaLimpia, alfabetoSet);
+
+    if (pertenece) {
+        mensaje.append(" - ").append(cadenaLimpia).append(" PERTENECE\n");
+    } else {
+        mensaje.append(" - ").append(cadenaLimpia).append(" NO pertenece\n");
+    }
+}
+
+// 7. Mostrar el resultado en el área de texto
+resultadoArea.setText(mensaje.toString());
     }//GEN-LAST:event_comprobarBtnActionPerformed
 
     private void alfabetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alfabetoActionPerformed

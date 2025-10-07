@@ -40,7 +40,7 @@ public class ExPT3 extends javax.swing.JFrame {
 
         jLabel3.setText("Alfabeto al que pertenecen");
 
-        jLabel2.setText("Conjunto de cadenas");
+        jLabel2.setText("Lenguaje a comprobar:");
 
         Volver3.setText("<---");
         Volver3.addActionListener(new java.awt.event.ActionListener() {
